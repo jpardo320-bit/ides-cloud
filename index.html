@@ -116,7 +116,6 @@ footer{background:var(--bg-elevated);border-top:1px solid var(--border);padding:
 </style>
 </head>
 <body>
-
 <nav class="nav">
   <div class="nav-inner">
     <a href="#top" class="logo">IDES<span class="dot">.</span><span class="cloud">Cloud</span></a>
@@ -128,7 +127,6 @@ footer{background:var(--bg-elevated);border-top:1px solid var(--border);padding:
     </div>
   </div>
 </nav>
-
 <header class="hero" id="top">
   <div class="container">
     <div class="pill">Early access · Design partner program open</div>
@@ -143,7 +141,6 @@ footer{background:var(--bg-elevated);border-top:1px solid var(--border);padding:
     <p style="margin-top:2.4rem"><span class="pulse">Currently in private beta · ~25 design partners onboarding</span></p>
   </div>
 </header>
-
 <section class="section">
   <div class="container center">
     <span class="label">The problem</span>
@@ -153,7 +150,6 @@ footer{background:var(--bg-elevated);border-top:1px solid var(--border);padding:
     </p>
   </div>
 </section>
-
 <section class="section" id="how">
   <div class="container">
     <div class="center">
@@ -189,7 +185,6 @@ ciphertext = client.<span class="fn">encrypt</span>(plaintext=<span class="str">
     </div>
   </div>
 </section>
-
 <section class="section" id="architecture">
   <div class="container">
     <div class="center">
@@ -197,7 +192,6 @@ ciphertext = client.<span class="fn">encrypt</span>(plaintext=<span class="str">
       <h2>Four tiers, one login, zero plaintext on our side.</h2>
       <p class="kicker">Same login key unlocks all four encryption tiers. Each tier pays only the per-record cost it actually needs. No KMS round-trip per row.</p>
     </div>
-
     <div class="tiers">
       <div class="tier t1">
         <div class="name">Tier 1 · Vault</div>
@@ -220,7 +214,6 @@ ciphertext = client.<span class="fn">encrypt</span>(plaintext=<span class="str">
         <p>XChaCha20-Poly1305 with sequence-bound nonces. Replay, reorder, truncation detected at decrypt.</p>
       </div>
     </div>
-
     <div class="architecture-diagram">
       <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg">
         <!-- Customer environment -->
@@ -234,12 +227,10 @@ ciphertext = client.<span class="fn">encrypt</span>(plaintext=<span class="str">
         <rect x="50" y="220" width="180" height="50" rx="6" fill="#1c2128" stroke="#f0c040"/>
         <text x="140" y="243" text-anchor="middle" fill="#f0c040" font-size="13" font-weight="600">Your KMS / HSM</text>
         <text x="140" y="260" text-anchor="middle" fill="#8b949e" font-size="11">keys stay here</text>
-
         <!-- Arrow showing ciphertext -->
         <line x1="270" y1="180" x2="530" y2="180" stroke="#58a6ff" stroke-width="2" stroke-dasharray="4 3"/>
         <polygon points="530,180 520,175 520,185" fill="#58a6ff"/>
         <text x="400" y="170" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="600">ciphertext only</text>
-
         <!-- IDES Cloud -->
         <rect x="540" y="40" width="240" height="240" rx="10" fill="rgba(88,166,255,0.08)" stroke="#58a6ff" stroke-width="1.5"/>
         <text x="660" y="65" text-anchor="middle" fill="#58a6ff" font-size="13" font-weight="700" letter-spacing="1">IDES CLOUD</text>
@@ -257,7 +248,6 @@ ciphertext = client.<span class="fn">encrypt</span>(plaintext=<span class="str">
     </div>
   </div>
 </section>
-
 <section class="section">
   <div class="container">
     <div class="center">
@@ -276,10 +266,10 @@ ciphertext = client.<span class="fn">encrypt</span>(plaintext=<span class="str">
         <p>Every operation appended to a cryptographically chained audit catalog. Compliance reports (HIPAA, PCI, SOC 2, GDPR) exportable on demand.</p>
       </div>
       <div class="card">
-           <div class="ico">⚡</div>
-           <h3>IDES engine performance</h3>
-           <p>1+ GB/s single-stream encryption, 21-71k single-op ops/sec across five SDKs, p50 latency 11-37 µs — measured on Apple Silicon. No KMS round-trip per record. IDES Cloud throughput figures published at general availability.</p>
-         </div>
+        <div class="ico">⚡</div>
+        <h3>IDES engine performance</h3>
+        <p>1+ GB/s single-stream encryption, 21-71k single-op ops/sec across five SDKs, p50 latency 11-37 µs — measured on Apple Silicon. No KMS round-trip per record. IDES Cloud throughput figures published at general availability.</p>
+      </div>
       <div class="card">
         <div class="ico">🛡</div>
         <h3>Quantum-aware roadmap</h3>
@@ -298,7 +288,6 @@ ciphertext = client.<span class="fn">encrypt</span>(plaintext=<span class="str">
     </div>
   </div>
 </section>
-
 <section class="waitlist" id="waitlist">
   <div class="container">
     <span class="label">Early access</span>
@@ -306,17 +295,13 @@ ciphertext = client.<span class="fn">encrypt</span>(plaintext=<span class="str">
     <p class="lead">
       Design-partner pricing for the first 50 customers. Direct access to our engineering team. Talk to us about your use case — we'll tell you honestly whether IDES Cloud is the right fit.
     </p>
-
     <form class="form" id="waitlist-form" action="https://formspree.io/f/meenwljn" method="POST">
       <label for="name">Your name</label>
       <input id="name" name="name" type="text" required autocomplete="name">
-
       <label for="email">Work email</label>
       <input id="email" name="email" type="email" required autocomplete="email">
-
       <label for="company">Company</label>
       <input id="company" name="company" type="text" required autocomplete="organization">
-
       <label for="role">Your role</label>
       <select id="role" name="role" required>
         <option value="">Select…</option>
@@ -328,7 +313,6 @@ ciphertext = client.<span class="fn">encrypt</span>(plaintext=<span class="str">
         <option>Product</option>
         <option>Other</option>
       </select>
-
       <label for="usecase">Primary use case</label>
       <select id="usecase" name="usecase" required>
         <option value="">Select…</option>
@@ -342,17 +326,14 @@ ciphertext = client.<span class="fn">encrypt</span>(plaintext=<span class="str">
         <option>Federal / Defense</option>
         <option>Other</option>
       </select>
-
       <label for="notes">Anything else? (optional)</label>
       <textarea id="notes" name="notes" placeholder="What problem are you trying to solve? What's your current solution?"></textarea>
-
       <button type="submit" class="btn btn-primary">Request access →</button>
       <div class="success" id="success-msg">Thanks — we got your request. We'll be in touch within 2 business days.</div>
       <p class="privacy">We respect your inbox. Used to evaluate access only. No marketing list.</p>
     </form>
   </div>
 </section>
-
 <section class="section" id="faq">
   <div class="container">
     <div class="center">
@@ -360,65 +341,52 @@ ciphertext = client.<span class="fn">encrypt</span>(plaintext=<span class="str">
       <h2>What people ask first.</h2>
     </div>
     <div class="faq">
-
       <div class="faq-item">
         <div class="faq-q">How is this different from AWS KMS?</div>
         <div class="faq-a">AWS KMS handles keys; you still encrypt and decrypt your data inside an AWS-owned process, which means AWS sees the plaintext at the moment of crypto operation. IDES Cloud never touches plaintext — the SDK in your environment encrypts before anything leaves your boundary. Also: KMS round-trips cost ~1ms each, untenable for high-volume per-record workloads. IDES does per-record encryption in-process at microsecond latency.</div>
       </div>
-
       <div class="faq-item">
         <div class="faq-q">Do you ever see our data?</div>
         <div class="faq-a">No — by architecture. Customer plaintext is encrypted client-side using a key derived from your KMS. The ciphertext we hold is opaque to us. If subpoenaed, we can produce ciphertext + audit catalog metadata; we cannot produce plaintext because we don't have the keys.</div>
       </div>
-
       <div class="faq-item">
         <div class="faq-q">When does it launch?</div>
         <div class="faq-a">Private beta is open now with ~25 design partners onboarding. General availability targets Q3 2026. Design-partner customers get production-grade SLAs from beta.</div>
       </div>
-
       <div class="faq-item">
         <div class="faq-q">What about compliance?</div>
         <div class="faq-a">SOC 2 Type I in progress (audit firm engaged). HIPAA BAA available; we operate as a business associate under §164. GDPR DPA + Standard Contractual Clauses available. ITAR registered. FIPS 140-3 validation is on the roadmap for federal customers.</div>
       </div>
-
       <div class="faq-item">
         <div class="faq-q">What does it cost?</div>
         <div class="faq-a">Design-partner pricing is flat-rate, transparent, and well below comparable encryption infrastructure. General availability pricing will be usage-based (per encrypt operation + per GB stored). We'll publish pricing at GA. Talk to us — for the design partner cohort, we want the fit to be right more than we want a particular contract size.</div>
       </div>
-
       <div class="faq-item">
         <div class="faq-q">Can I self-host instead?</div>
         <div class="faq-a">Yes — IDES is also available as software you run yourself. Tier 3 BYOK deployments install in your own AWS/GCP account; you control the entire infrastructure. Many customers run a mix: self-hosted Tier 3 for production data, IDES Cloud for dev/staging and ancillary use cases.</div>
       </div>
-
       <div class="faq-item">
         <div class="faq-q">What if you go out of business?</div>
         <div class="faq-a">Source code is licensed under MIT/Apache-2.0. You'd have everything to continue running the software yourself. Customer-controlled keys also mean your data is recoverable independent of us — your KMS still works, your ciphertext is still readable with the keys you control.</div>
       </div>
-
     </div>
   </div>
 </section>
-
 <footer>
   <div class="footer-inner">
     <div>
       <strong>IDES Systems</strong> · <a href="mailto:jpardo320@gmail.com">jpardo320@gmail.com</a>
     </div>
     <div>
-      <a href="../ides-website/index.html">Main site</a> · <a href="../ides-website/security.html">Security</a> · <a href="../ides-website/technology.html">Technology</a> · <a href="../ides-website/pricing.html">Pricing</a>
+      <a href="https://jpardo320-bit.github.io/ides-cloud/">IDES Cloud</a>
     </div>
     <div>© 2026 IDES Systems</div>
   </div>
 </footer>
-
 <script>
-// Optional: handle form submission with success message overlay
 (function(){
   var form = document.getElementById('waitlist-form');
-  var success = document.getElementById('success-msg');
   if (!form) return;
-
   form.addEventListener('submit', function(e){
     var action = form.getAttribute('action') || '';
     if (action.indexOf('REPLACE_WITH') !== -1) {
@@ -426,11 +394,9 @@ ciphertext = client.<span class="fn">encrypt</span>(plaintext=<span class="str">
       alert('Form backend not yet configured. See README.md for setup instructions.');
       return;
     }
-    // Allow form to submit normally; show success on return via Formspree's redirect, OR via AJAX:
-    // (Formspree will redirect to a thank-you page by default. For inline success, you can use AJAX.)
+    // Formspree handles submission and redirect.
   });
 })();
 </script>
-
 </body>
 </html>
