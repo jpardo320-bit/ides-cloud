@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IDES Cloud — Managed encryption. You keep the keys. We keep nothing.</title>
+<meta name="description" content="Hosted IDES — multi-tier encryption infrastructure where customer plaintext never enters our systems. Customer-controlled keys, cryptographically tamper-evident audit catalog, post-quantum roadmap. Join the waitlist.">
+<meta property="og:title" content="IDES Cloud — Managed encryption. You keep the keys. We keep nothing.">
+<meta property="og:description" content="The hosted version of IDES. Plaintext never enters our systems by architecture, not policy.">
+<meta property="og:type" content="website">
+<style>
+:root{
+  --bg:#0d1117;--bg-elevated:#161b22;--bg-card:#1c2128;
+  --border:#30363d;--border-soft:#21262d;
+  --text:#c9d1d9;--text-dim:#8b949e;--heading:#f0f6fc;
+  --accent:#58a6ff;--accent-warm:#ff7b72;--code:#79c0ff;
+  --success:#3fb950;--warning:#d29922;
+  --tier1:#f0c040;--tier2:#4dd0e1;--tier3:#b388ff;--tier4:#66bb6a;
+  --radius:8px;--maxw:1100px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3,h4{color:var(--heading);line-height:1.25;margin:0 0 0.6em}
+h1{font-size:3rem;letter-spacing:-0.02em;font-weight:700}
+h2{font-size:1.9rem;font-weight:700;margin-top:2.5rem}
+h3{font-size:1.25rem;font-weight:600;margin-top:1.5rem}
+p{margin:0 0 1em}
+code{font-family:"SF Mono",Consolas,Menlo,monospace;font-size:0.9em;background:var(--bg-card);color:var(--code);padding:1px 6px;border-radius:4px}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 1.4rem}
+.nav{position:sticky;top:0;z-index:100;background:rgba(13,17,23,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:0.85rem 1.4rem;display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:700;font-size:1.2rem;color:var(--heading);letter-spacing:0.02em}
+.logo .dot{color:var(--accent)}
+.logo .cloud{color:var(--text-dim);font-weight:500;margin-left:4px}
+.nav-links{display:flex;gap:1.6rem;font-size:0.95rem;align-items:center}
+.nav-links a{color:var(--text);font-weight:500}
+.nav-links a:hover{color:var(--accent);text-decoration:none}
+.btn{display:inline-block;padding:0.7rem 1.4rem;border-radius:var(--radius);font-weight:600;font-size:0.95rem;text-decoration:none !important;border:1px solid transparent;cursor:pointer;transition:transform 0.1s ease,background 0.2s ease;font-family:inherit}
+.btn-primary{background:var(--accent);color:#0d1117}
+.btn-primary:hover{background:#79b8ff;transform:translateY(-1px)}
+.btn-ghost{background:transparent;border-color:var(--border);color:var(--text)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.hero{padding:5rem 0 4rem;text-align:center;background:radial-gradient(circle at 50% 20%,rgba(88,166,255,0.10),transparent 60%);border-bottom:1px solid var(--border-soft)}
+.hero h1{font-size:3.4rem;margin-bottom:1.2rem;background:linear-gradient(135deg,#f0f6fc,#88a4d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero .lede{font-size:1.25rem;color:var(--text);max-width:720px;margin:0 auto 2rem}
+.hero .pill{display:inline-block;background:rgba(88,166,255,0.12);border:1px solid rgba(88,166,255,0.35);color:var(--accent);padding:4px 12px;border-radius:999px;font-size:0.8rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:1.4rem}
+.btn-row{display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap}
+.section{padding:4rem 0;border-bottom:1px solid var(--border-soft)}
+.section:last-child{border-bottom:none}
+.section .label{display:inline-block;font-size:0.78rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:0.6rem}
+.three-up{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.4rem;margin:2.4rem 0}
+.card{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:var(--radius);padding:1.8rem}
+.card h3{margin-top:0}
+.card .ico{display:inline-block;font-size:1.6rem;line-height:1;margin-bottom:0.6rem}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.4rem;margin:2.4rem 0}
+.step{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:var(--radius);padding:1.8rem;position:relative}
+.step .n{position:absolute;top:-14px;left:1.8rem;background:var(--accent);color:#0d1117;font-weight:800;font-size:0.9rem;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.code-snippet{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:var(--radius);padding:1rem 1.2rem;font-family:"SF Mono",Consolas,Menlo,monospace;font-size:0.88em;overflow-x:auto;margin:1rem 0;line-height:1.5}
+.code-snippet .kw{color:var(--accent-warm)}
+.code-snippet .fn{color:var(--accent)}
+.code-snippet .str{color:#a5d6ff}
+.code-snippet .cmt{color:var(--text-dim)}
+.tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:2rem 0}
+.tier{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:var(--radius);padding:1.4rem;border-top-width:3px;border-top-style:solid}
+.tier.t1{border-top-color:var(--tier1)}
+.tier.t2{border-top-color:var(--tier2)}
+.tier.t3{border-top-color:var(--tier3)}
+.tier.t4{border-top-color:var(--tier4)}
+.tier .name{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;font-weight:700;margin-bottom:0.3rem}
+.tier.t1 .name{color:var(--tier1)}
+.tier.t2 .name{color:var(--tier2)}
+.tier.t3 .name{color:var(--tier3)}
+.tier.t4 .name{color:var(--tier4)}
+.tier h4{margin:0 0 0.4rem;color:var(--heading)}
+.tier p{font-size:0.9rem;color:var(--text-dim);margin:0}
+.waitlist{background:linear-gradient(180deg,var(--bg) 0%,rgba(88,166,255,0.04) 50%,var(--bg) 100%);padding:5rem 0;text-align:center}
+.waitlist h2{font-size:2.2rem}
+.waitlist p.lead{font-size:1.15rem;max-width:600px;margin:0 auto 2.4rem}
+.form{max-width:520px;margin:0 auto;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:2rem;text-align:left}
+.form label{display:block;font-size:0.82rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.3rem;margin-top:1rem}
+.form label:first-child{margin-top:0}
+.form input,.form select,.form textarea{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:0.7rem 0.9rem;color:var(--text);font-family:inherit;font-size:0.95rem}
+.form input:focus,.form select:focus,.form textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(88,166,255,0.15)}
+.form textarea{min-height:90px;resize:vertical}
+.form button{width:100%;margin-top:1.5rem;padding:0.9rem 1.4rem;font-size:1rem}
+.form .privacy{font-size:0.78rem;color:var(--text-dim);margin-top:1rem;text-align:center}
+.form .success{display:none;text-align:center;padding:1rem;background:rgba(63,185,80,0.12);border:1px solid var(--success);border-radius:6px;color:var(--success);font-weight:600;margin-top:1rem}
+.faq{max-width:760px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--border-soft);padding:1.4rem 0}
+.faq-item:last-child{border-bottom:none}
+.faq-q{font-weight:700;color:var(--heading);margin-bottom:0.5rem;font-size:1.05rem}
+.faq-a{color:var(--text);font-size:0.96rem}
+.faq-a code{font-size:0.88em}
+footer{background:var(--bg-elevated);border-top:1px solid var(--border);padding:2.5rem 0;font-size:0.9rem;color:var(--text-dim);margin-top:0}
+.footer-inner{max-width:var(--maxw);margin:0 auto;padding:0 1.4rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-inner a{color:var(--text)}
+.footer-inner a:hover{color:var(--accent)}
+@media (max-width:760px){
+  h1{font-size:2rem}
+  .hero h1{font-size:2.3rem}
+  .hero .lede{font-size:1.05rem}
+  .nav-links{gap:0.9rem;font-size:0.85rem}
+  .nav-links a:not(.btn){display:none}
+}
+.center{text-align:center}
+.lead{font-size:1.1rem;color:var(--text);max-width:760px;margin:0 auto 2rem}
+.kicker{font-size:0.95rem;color:var(--text-dim);max-width:680px;margin:0 auto 2rem}
+.pulse{display:inline-flex;align-items:center;gap:0.4rem;background:rgba(63,185,80,0.12);color:var(--success);padding:3px 10px;border-radius:999px;font-size:0.78rem;font-weight:600}
+.pulse::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--success);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.architecture-diagram{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:2rem 1.5rem;margin:2rem auto;max-width:900px}
+.architecture-diagram svg{display:block;width:100%;height:auto}
+.diagram-caption{color:var(--text-dim);font-size:0.92rem;text-align:center;margin-top:1rem}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="logo">IDES<span class="dot">.</span><span class="cloud">Cloud</span></a>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#faq">FAQ</a>
+      <a href="#waitlist" class="btn btn-primary">Join Waitlist</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="container">
+    <div class="pill">Early access · Design partner program open</div>
+    <h1>Managed encryption.<br>You keep the keys.<br>We keep nothing.</h1>
+    <p class="lede">
+      IDES Cloud is the hosted version of IDES — the multi-tier encryption platform where customer plaintext never enters our systems. By architecture, not by policy. Deploy in 10 minutes; pay only for what you use.
+    </p>
+    <div class="btn-row">
+      <a href="#waitlist" class="btn btn-primary">Join the waitlist →</a>
+      <a href="#how" class="btn btn-ghost">See how it works</a>
+    </div>
+    <p style="margin-top:2.4rem"><span class="pulse">Currently in private beta · ~25 design partners onboarding</span></p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container center">
+    <span class="label">The problem</span>
+    <h2>Every encryption vendor sees your plaintext.</h2>
+    <p class="lead">
+      AWS KMS, Azure Key Vault, HashiCorp Vault, every password manager — they all process plaintext on their hardware at some point. Their security posture is built on "we won't look." IDES is built so we <strong>can't</strong>.
+    </p>
+  </div>
+</section>
+
+<section class="section" id="how">
+  <div class="container">
+    <div class="center">
+      <span class="label">How it works</span>
+      <h2>Three steps from signup to encrypting in production.</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="n">1</div>
+        <h3>Connect your KMS</h3>
+        <p>Point IDES Cloud at your AWS KMS, GCP KMS, Azure Key Vault, or HashiCorp Vault. Or bring your own HSM. Your keys never leave your boundary.</p>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <h3>Install the SDK</h3>
+        <p>Five first-party SDKs — Python, Node.js, Go, Java/JDBC, Postgres extension. Or use the S3-compatible gateway with any tool that speaks S3.</p>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <h3>Encrypt with one call</h3>
+        <p>Single function call to encrypt; single function call to decrypt. Same API across tiers. Audit catalog records every operation cryptographically.</p>
+      </div>
+    </div>
+    <div class="code-snippet">
+<span class="cmt"># Python — one call, end-to-end encrypted</span>
+<span class="kw">from</span> ides <span class="kw">import</span> Client
+<span class="cmt"></span>
+client = Client(kms_endpoint=<span class="str">"aws:kms:us-east-1:..."</span>)
+ciphertext = client.<span class="fn">encrypt</span>(plaintext=<span class="str">b"PHI record"</span>, subject_id=<span class="str">"patient-42"</span>)
+<span class="cmt"></span>
+<span class="cmt"># Plaintext is encrypted client-side with a key derived from your KMS.</span>
+<span class="cmt"># IDES Cloud sees only ciphertext. We could not decrypt this if subpoenaed.</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="architecture">
+  <div class="container">
+    <div class="center">
+      <span class="label">Architecture</span>
+      <h2>Four tiers, one login, zero plaintext on our side.</h2>
+      <p class="kicker">Same login key unlocks all four encryption tiers. Each tier pays only the per-record cost it actually needs. No KMS round-trip per row.</p>
+    </div>
+
+    <div class="tiers">
+      <div class="tier t1">
+        <div class="name">Tier 1 · Vault</div>
+        <h4>Master secrets</h4>
+        <p>Per-payload AES-256-GCM with BLAKE3-keyed isolation. Leak one entry, leak only that entry.</p>
+      </div>
+      <div class="tier t2">
+        <div class="name">Tier 2 · Document</div>
+        <h4>Files & objects</h4>
+        <p>S3-compatible gateway with end-to-end streaming encryption. RSS bounded at ~16-32 MB for any object size.</p>
+      </div>
+      <div class="tier t3">
+        <div class="name">Tier 3 · Record</div>
+        <h4>Database rows</h4>
+        <p>Per-record HKDF AES-256-GCM with split-secret pepper. ~10¹¹⁵ combinations per record.</p>
+      </div>
+      <div class="tier t4">
+        <div class="name">Tier 4 · Stream</div>
+        <h4>Logs & telemetry</h4>
+        <p>XChaCha20-Poly1305 with sequence-bound nonces. Replay, reorder, truncation detected at decrypt.</p>
+      </div>
+    </div>
+
+    <div class="architecture-diagram">
+      <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg">
+        <!-- Customer environment -->
+        <rect x="20" y="40" width="240" height="240" rx="10" fill="rgba(102,187,106,0.08)" stroke="#66bb6a" stroke-width="1.5"/>
+        <text x="140" y="65" text-anchor="middle" fill="#66bb6a" font-size="13" font-weight="700" letter-spacing="1">YOUR ENVIRONMENT</text>
+        <rect x="50" y="90" width="180" height="50" rx="6" fill="#1c2128" stroke="#30363d"/>
+        <text x="140" y="118" text-anchor="middle" fill="#f0f6fc" font-size="13" font-weight="600">Your application</text>
+        <rect x="50" y="155" width="180" height="50" rx="6" fill="#1c2128" stroke="#30363d"/>
+        <text x="140" y="178" text-anchor="middle" fill="#f0f6fc" font-size="13" font-weight="600">IDES SDK (client)</text>
+        <text x="140" y="195" text-anchor="middle" fill="#8b949e" font-size="11">encrypts here</text>
+        <rect x="50" y="220" width="180" height="50" rx="6" fill="#1c2128" stroke="#f0c040"/>
+        <text x="140" y="243" text-anchor="middle" fill="#f0c040" font-size="13" font-weight="600">Your KMS / HSM</text>
+        <text x="140" y="260" text-anchor="middle" fill="#8b949e" font-size="11">keys stay here</text>
+
+        <!-- Arrow showing ciphertext -->
+        <line x1="270" y1="180" x2="530" y2="180" stroke="#58a6ff" stroke-width="2" stroke-dasharray="4 3"/>
+        <polygon points="530,180 520,175 520,185" fill="#58a6ff"/>
+        <text x="400" y="170" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="600">ciphertext only</text>
+
+        <!-- IDES Cloud -->
+        <rect x="540" y="40" width="240" height="240" rx="10" fill="rgba(88,166,255,0.08)" stroke="#58a6ff" stroke-width="1.5"/>
+        <text x="660" y="65" text-anchor="middle" fill="#58a6ff" font-size="13" font-weight="700" letter-spacing="1">IDES CLOUD</text>
+        <rect x="570" y="90" width="180" height="50" rx="6" fill="#1c2128" stroke="#30363d"/>
+        <text x="660" y="113" text-anchor="middle" fill="#f0f6fc" font-size="13" font-weight="600">Gateway / API</text>
+        <text x="660" y="130" text-anchor="middle" fill="#8b949e" font-size="11">opaque ciphertext flows</text>
+        <rect x="570" y="155" width="180" height="50" rx="6" fill="#1c2128" stroke="#30363d"/>
+        <text x="660" y="178" text-anchor="middle" fill="#f0f6fc" font-size="13" font-weight="600">Audit catalog</text>
+        <text x="660" y="195" text-anchor="middle" fill="#8b949e" font-size="11">tamper-evident hash chain</text>
+        <rect x="570" y="220" width="180" height="50" rx="6" fill="#1c2128" stroke="#30363d"/>
+        <text x="660" y="243" text-anchor="middle" fill="#f0f6fc" font-size="13" font-weight="600">Encrypted storage</text>
+        <text x="660" y="260" text-anchor="middle" fill="#8b949e" font-size="11">we cannot decrypt this</text>
+      </svg>
+      <p class="diagram-caption">Plaintext exists only inside your environment. Ciphertext flows to IDES Cloud. We never see your keys, never see your data.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="center">
+      <span class="label">What you get</span>
+      <h2>Architectural guarantees, not policy promises.</h2>
+    </div>
+    <div class="three-up">
+      <div class="card">
+        <div class="ico">🔒</div>
+        <h3>Cryptographic isolation</h3>
+        <p>Customer plaintext is encrypted client-side before reaching us. Customer keys live in your KMS. Even if our systems are fully breached, attackers get ciphertext without keys.</p>
+      </div>
+      <div class="card">
+        <div class="ico">📜</div>
+        <h3>Tamper-evident audit</h3>
+        <p>Every operation appended to a cryptographically chained audit catalog. Compliance reports (HIPAA, PCI, SOC 2, GDPR) exportable on demand.</p>
+      </div>
+      <div class="card">
+        <div class="ico">⚡</div>
+        <h3>Production performance</h3>
+        <p>1+ GB/s single-stream throughput, 21-71k single-op ops/sec across SDKs, p50 latency 11-37 µs. No KMS round-trip per record.</p>
+      </div>
+      <div class="card">
+        <div class="ico">🛡</div>
+        <h3>Quantum-aware roadmap</h3>
+        <p>Hybrid post-quantum key agreement (ML-KEM-768 + X25519) lands in v2.9. Harvest-now-decrypt-later attacks are already on our threat model.</p>
+      </div>
+      <div class="card">
+        <div class="ico">🏛</div>
+        <h3>Compliance-ready</h3>
+        <p>SOC 2 Type I in flight. HIPAA Business Associate Agreement available. GDPR DPA + EU SCCs. ITAR-registered for export.</p>
+      </div>
+      <div class="card">
+        <div class="ico">📦</div>
+        <h3>Five first-party SDKs</h3>
+        <p>Python, Node.js, Go, Java/JDBC, and a native Postgres extension. Add the S3-compatible gateway and you cover 80% of the backend stack.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="waitlist" id="waitlist">
+  <div class="container">
+    <span class="label">Early access</span>
+    <h2>Join the waitlist.</h2>
+    <p class="lead">
+      Design-partner pricing for the first 50 customers. Direct access to our engineering team. Talk to us about your use case — we'll tell you honestly whether IDES Cloud is the right fit.
+    </p>
+
+    <form class="form" id="waitlist-form" action="https://formspree.io/f/REPLACE_WITH_YOUR_FORMSPREE_ID" method="POST">
+      <label for="name">Your name</label>
+      <input id="name" name="name" type="text" required autocomplete="name">
+
+      <label for="email">Work email</label>
+      <input id="email" name="email" type="email" required autocomplete="email">
+
+      <label for="company">Company</label>
+      <input id="company" name="company" type="text" required autocomplete="organization">
+
+      <label for="role">Your role</label>
+      <select id="role" name="role" required>
+        <option value="">Select…</option>
+        <option>Founder / CEO</option>
+        <option>CTO / VP Engineering</option>
+        <option>CISO / Security Lead</option>
+        <option>Engineer / IC</option>
+        <option>Compliance / Legal</option>
+        <option>Product</option>
+        <option>Other</option>
+      </select>
+
+      <label for="usecase">Primary use case</label>
+      <select id="usecase" name="usecase" required>
+        <option value="">Select…</option>
+        <option>Healthcare / PHI</option>
+        <option>Fintech / Payments / PCI</option>
+        <option>Legal / Documents</option>
+        <option>Database column encryption</option>
+        <option>Log / telemetry encryption</option>
+        <option>File / object storage encryption</option>
+        <option>SaaS platform building on top</option>
+        <option>Federal / Defense</option>
+        <option>Other</option>
+      </select>
+
+      <label for="notes">Anything else? (optional)</label>
+      <textarea id="notes" name="notes" placeholder="What problem are you trying to solve? What's your current solution?"></textarea>
+
+      <button type="submit" class="btn btn-primary">Request access →</button>
+      <div class="success" id="success-msg">Thanks — we got your request. We'll be in touch within 2 business days.</div>
+      <p class="privacy">We respect your inbox. Used to evaluate access only. No marketing list.</p>
+    </form>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="container">
+    <div class="center">
+      <span class="label">FAQ</span>
+      <h2>What people ask first.</h2>
+    </div>
+    <div class="faq">
+
+      <div class="faq-item">
+        <div class="faq-q">How is this different from AWS KMS?</div>
+        <div class="faq-a">AWS KMS handles keys; you still encrypt and decrypt your data inside an AWS-owned process, which means AWS sees the plaintext at the moment of crypto operation. IDES Cloud never touches plaintext — the SDK in your environment encrypts before anything leaves your boundary. Also: KMS round-trips cost ~1ms each, untenable for high-volume per-record workloads. IDES does per-record encryption in-process at microsecond latency.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Do you ever see our data?</div>
+        <div class="faq-a">No — by architecture. Customer plaintext is encrypted client-side using a key derived from your KMS. The ciphertext we hold is opaque to us. If subpoenaed, we can produce ciphertext + audit catalog metadata; we cannot produce plaintext because we don't have the keys.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">When does it launch?</div>
+        <div class="faq-a">Private beta is open now with ~25 design partners onboarding. General availability targets Q3 2026. Design-partner customers get production-grade SLAs from beta.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What about compliance?</div>
+        <div class="faq-a">SOC 2 Type I in progress (audit firm engaged). HIPAA BAA available; we operate as a business associate under §164. GDPR DPA + Standard Contractual Clauses available. ITAR registered. FIPS 140-3 validation is on the roadmap for federal customers.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What does it cost?</div>
+        <div class="faq-a">Design-partner pricing is flat-rate, transparent, and well below comparable encryption infrastructure. General availability pricing will be usage-based (per encrypt operation + per GB stored). We'll publish pricing at GA. Talk to us — for the design partner cohort, we want the fit to be right more than we want a particular contract size.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Can I self-host instead?</div>
+        <div class="faq-a">Yes — IDES is also available as software you run yourself. Tier 3 BYOK deployments install in your own AWS/GCP account; you control the entire infrastructure. Many customers run a mix: self-hosted Tier 3 for production data, IDES Cloud for dev/staging and ancillary use cases.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What if you go out of business?</div>
+        <div class="faq-a">Source code is licensed under MIT/Apache-2.0. You'd have everything to continue running the software yourself. Customer-controlled keys also mean your data is recoverable independent of us — your KMS still works, your ciphertext is still readable with the keys you control.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <strong>IDES Systems</strong> · <a href="mailto:jpardo320@gmail.com">jpardo320@gmail.com</a>
+    </div>
+    <div>
+      <a href="../ides-website/index.html">Main site</a> · <a href="../ides-website/security.html">Security</a> · <a href="../ides-website/technology.html">Technology</a> · <a href="../ides-website/pricing.html">Pricing</a>
+    </div>
+    <div>© 2026 IDES Systems</div>
+  </div>
+</footer>
+
+<script>
+// Optional: handle form submission with success message overlay
+(function(){
+  var form = document.getElementById('waitlist-form');
+  var success = document.getElementById('success-msg');
+  if (!form) return;
+
+  form.addEventListener('submit', function(e){
+    var action = form.getAttribute('action') || '';
+    if (action.indexOf('REPLACE_WITH') !== -1) {
+      e.preventDefault();
+      alert('Form backend not yet configured. See README.md for setup instructions.');
+      return;
+    }
+    // Allow form to submit normally; show success on return via Formspree's redirect, OR via AJAX:
+    // (Formspree will redirect to a thank-you page by default. For inline success, you can use AJAX.)
+  });
+})();
+</script>
+
+</body>
+</html>
